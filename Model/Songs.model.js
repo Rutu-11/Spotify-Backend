@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const songSchema = new mongoose.Schema({
   id: { type: Number },
   readable: { type: Boolean },
-  title: { type: String },
+  title: { type: String, index: 'text' }, // add index for text search
   title_short: { type: String },
   title_version: { type: String },
   link: { type: String },
@@ -16,7 +16,7 @@ const songSchema = new mongoose.Schema({
   md5_image: { type: String },
   artist: {
     id: { type: Number },
-    name: { type: String },
+    name: { type: String, index: 'text' }, // add index for text search
     link: { type: String },
     picture: { type: String },
     picture_small: { type: String },
@@ -40,6 +40,8 @@ const songSchema = new mongoose.Schema({
   },
   type: { type: String }
 });
+
+// songSchema.index({ title: 'text', 'artist.name': 'text' }); // create text index on title and artist.name fields
 
 const songModel = mongoose.model('Song', songSchema);
 

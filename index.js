@@ -19,7 +19,7 @@ app.get("/",(req,res)=>{
 })
 app.post("/postSongs", async(req, res) => {
   const artist = req.query;
-  const response = await getSongs("Badashah");
+  const response = await getSongs("Tony kakkar");
   if(response){
     try{
       for (let ele of response.data) {
@@ -45,6 +45,7 @@ app.post("/postSongs", async(req, res) => {
 
 app.get('/search', async (req, res) => {
   const query = req.query.q; // assuming the search query is passed as a query parameter 'q'
+  console.log(query)
   const data = await songModel.find({ $text: { $search: query } });
   if (data) {
     res.send({ data: data });
@@ -65,7 +66,7 @@ app.post("/signup", async (req, res) => {
       if (err) {
         res.send({ msg: err });
       }
-      const user = new userModel({ email, name, password: hash });
+      const user = new userModel({ email, name, password: hash, dateOfBirth, gender });
 
       try {
         await user.save();
@@ -117,8 +118,8 @@ app.get('/getProfile', authentication, async(req,res)=>{
   const {user_id} = req.body;
   const user = await userModel.findOne({_id:user_id});
 
-  const {name, email} = user;
-  res.send({name, email})
+  const {name, email, gender, dateOfBirth} = user;
+  res.send({name, email, gender, dateOfBirth})
 })
 
 
