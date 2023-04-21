@@ -125,9 +125,9 @@ app.get('/getProfile', authentication, async(req,res)=>{
 
 
 app.delete('/logout',authentication,async(req, res)=>{
-    const {user_id} = req.body;
-    const user = await userModel.findByIdAndDelete({_id:user_id});
-    const {name, email, gender, dateOfBirth} = user;
+    const {user_id, email} = req.body;
+    const user = await userModel.findOneAndDelete({email:email});
+    const {name, gender, dateOfBirth} = user;
     res.send({name, email, gender, dateOfBirth})
 })
 
