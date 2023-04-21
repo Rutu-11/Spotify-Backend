@@ -7,7 +7,8 @@ const authentication = (req,res,next)=>{
     // console.log(token)
 
     if(!token){
-        res.send("Please Login")
+        res.type('text').send('Please Login');
+
     }
     var decoded = jwt.verify(token,process.env.SECRETE_KEY );
     const user_id = decoded.user_id;
@@ -17,7 +18,8 @@ const authentication = (req,res,next)=>{
         next();
     }
     else{
-        res.send("please login");
+        res.type('text').send('Please Login');
+
     }
 }
 
