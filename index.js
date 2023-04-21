@@ -19,7 +19,7 @@ app.get("/",(req,res)=>{
 })
 app.post("/postSongs", async(req, res) => {
   const artist = req.query;
-  const response = await getSongs("Tony kakkar");
+  const response = await getSongs("Arijit Singh");
   if(response){
     try{
       for (let ele of response.data) {
@@ -119,9 +119,17 @@ app.get('/getProfile', authentication, async(req,res)=>{
   const user = await userModel.findOne({_id:user_id});
 
   const {name, email, gender, dateOfBirth} = user;
-  res.send({name, email, gender, dateOfBirth})
+  res.send({name, email, gender, dateOfBirth,user_id})
 })
 
+
+
+app.delete('/logout',authentication,async(req, res)=>{
+    const {user_id} = req.body;
+    const user = await userModel.findByIdAndDelete({_id:user_id});
+    const {name, email, gender, dateOfBirth} = user;
+    res.send({name, email, gender, dateOfBirth})
+})
 
 
 
